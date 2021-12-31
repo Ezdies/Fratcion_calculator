@@ -10,6 +10,12 @@ public:
         if (denominator == 0) throw std::runtime_error("0 w mianowniku");
     }
 
+    Rational(const int &constant, const int &numerator, const int &denominator) : m_numerator(numerator),
+                                                                                  m_denominator(denominator) {
+        if (denominator == 0) throw std::runtime_error("0 w mianowniku");
+        m_numerator += constant * denominator;
+    }
+
     int getNumerator() const { return m_numerator; };
 
     int getDenominator() const { return m_denominator; };
@@ -79,9 +85,9 @@ double toDouble(const Rational &rational) {
 }
 
 int main() {
-    Rational rational1(25, 18);
-    Rational rational2(27, 21);
-    Rational rational3(7, 2);
+    Rational rational1(3,4, 5);
+    Rational rational2(9,2,5);
+    Rational rational3( 7, 2);
 
     std::cout << rational1 + rational2 << std::endl;
     std::cout << (rational1 == rational2) << std::endl;
