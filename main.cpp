@@ -6,6 +6,8 @@ class Rational {
     int m_denominator;
 
 public:
+    explicit Rational(const int &constant) : m_numerator(constant), m_denominator(1) {};
+
     Rational(const int &numerator, const int &denominator) : m_numerator(numerator), m_denominator(denominator) {
         if (denominator == 0) throw std::runtime_error("0 w mianowniku");
     }
@@ -24,23 +26,27 @@ public:
 
 void printExcluded(const Rational &rational) {
     const int excluded = rational.getNumerator() / rational.getDenominator();
-    if (rational.getNumerator() >= rational.getDenominator()) {
+    if (rational.getNumerator() >= rational.getDenominator() && rational.getDenominator() != 1) {
         std::cout << excluded << " "
                   << rational.getNumerator() - excluded * rational.getDenominator();
         std::cout << '/' << rational.getDenominator();
-    } else {
+    } else if (rational.getNumerator() < rational.getDenominator() && rational.getDenominator() != 1) {
         std::cout << rational.getNumerator() << '/' << rational.getDenominator();
+    } else {
+        std::cout << rational.getNumerator();
     }
 }
 
 std::ostream &printExcluded(std::ostream &os, const Rational &rational) {
     const int excluded = rational.getNumerator() / rational.getDenominator();
-    if (rational.getNumerator() >= rational.getDenominator()) {
+    if (rational.getNumerator() >= rational.getDenominator() && rational.getDenominator() != 1) {
         os << excluded << " "
            << rational.getNumerator() - excluded * rational.getDenominator()
            << '/' << rational.getDenominator();
-    } else {
+    } else if (rational.getNumerator() < rational.getDenominator() && rational.getDenominator() != 1) {
         os << rational.getNumerator() << '/' << rational.getDenominator();
+    } else {
+        std::cout << rational.getNumerator();
     }
     return os;
 }
@@ -85,13 +91,16 @@ double toDouble(const Rational &rational) {
 }
 
 int main() {
-    Rational rational1(3,4, 5);
-    Rational rational2(9,2,5);
-    Rational rational3( 7, 2);
+    Rational rational1(3, 4, 5);
+    Rational rational2(9, 2, 5);
+    Rational rational3(7, 2);
+    Rational rational4(3);
+    auto rational5 = Rational(4);
 
     std::cout << rational1 + rational2 << std::endl;
     std::cout << (rational1 == rational2) << std::endl;
     std::cout << toDouble(rational3) << std::endl;
+    std::cout << rational4 + rational5<< std::endl;
     printExcluded(rational3);
 
     return 0;
